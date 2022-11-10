@@ -9,10 +9,10 @@ function* setUserSaga(action: PayloadAction<{ user: string, navigate: NavigateFu
     const user: string = yield new Promise((res) => {
         setTimeout(() => {
             res(action.payload.user)
-        }, 2000);
+        }, 500);
     })
     yield put(setUser(user));
-    yield action.payload.navigate(pathLocations.protected, { replace: true });
+    yield action.payload.navigate(pathLocations.chatPage, { replace: true });
 
 }
 export default function* sagaSetUserHook() {

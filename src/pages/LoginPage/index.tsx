@@ -1,12 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../routes/auth';
 import { pathLocations } from '../../routes/path';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './style.css'
-import { setUser } from '../../store/slices/userSlice';
+import { clearUser, setUser, userState } from '../../store/slices/userSlice';
 import { sagaSetUserAction } from '../../saga/actions/user';
 
 export function LoginPage() {
+    const user = useSelector(userState).value
     let navigate = useNavigate();
     let location = useLocation();
     let auth = useAuth();
@@ -19,23 +20,24 @@ export function LoginPage() {
 
         let formData = new FormData(event.currentTarget);
         let username = formData.get("username") as string;
-        dispatch(sagaSetUserAction(username,navigate))
-        auth.signin(username, () => {
-            navigate(pathLocations.protected, { replace: true });
-        });
+        dispatch(sagaSetUserAction(username, navigate))
     }
 
     return (
         <div>
-            <h2>Login Page</h2>
-            <p>You must log in to view the page at {from}</p>
+            <h2>{!user ? 'Login Page' : 'Settings'}</h2>
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username: <input name="username" type="text" />
-                </label>{" "}
-                <button type="submit">Login</button>
-            </form>
+            {user ? <><br /><button onClick={() => { dispatch(clearUser()) }}>Logout</button></> : <div>
+                <p>You must log in to view the page at {from}</p>
+
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Username: <input name="username" type="text" />
+                    </label>{" "}
+                    <button type="submit">Login</button>
+                </form>
+            </div>}
+
         </div>
     );
 }

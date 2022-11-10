@@ -1,8 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet } from 'react-router-dom'
 import { pathLocations } from '../../routes/path';
+import { clearUser, userState } from '../../store/slices/userSlice';
 import './style.css'
 
 export default function Layout() {
+    const user = useSelector(userState).value
+    const dispatch = useDispatch()
     return (
         <div>
             <nav>
@@ -11,22 +15,10 @@ export default function Layout() {
                         <Link to={pathLocations.layout}>Home</Link>
                     </li>
                     <li>
-                        <Link to={pathLocations.courses}>Courses</Link>
+                        <Link to={pathLocations.chatPage}>Chat page</Link>
                     </li>
                     <li>
-                        <Link to={pathLocations.NoMatch}>Nothing Here</Link>
-                    </li>
-                    <li>
-                        <Link to={pathLocations.publicPage}>Public page</Link>
-                    </li>
-                    <li>
-                        <Link to={pathLocations.counterPage}>Counter page</Link>
-                    </li>
-                    <li>
-                        <Link to={pathLocations.protected}>Protected page</Link>
-                    </li>
-                    <li>
-                        <Link to={pathLocations.loginPage}>Login</Link>
+                        <Link to={pathLocations.loginPage}>{user ? 'Settings' : 'Login'}</Link>
                     </li>
                 </ul>
             </nav>
