@@ -1,0 +1,7 @@
+ul.menu {
+    @apply flex flex-row p-4 pl-0;
+}
+
+ul.menu li {
+    @apply pr-4
+}
