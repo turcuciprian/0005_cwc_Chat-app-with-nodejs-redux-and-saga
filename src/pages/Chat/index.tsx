@@ -9,7 +9,7 @@ export default function ChatPage() {
                 Chat Page
             </h2>
 
-            <p>This is a great course. You're gonna love it!</p>
+            <p>Write something in the chat at the bottom</p>
 
         </div>
     );
