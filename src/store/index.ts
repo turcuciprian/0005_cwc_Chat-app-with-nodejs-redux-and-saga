@@ -11,7 +11,6 @@ export const store = configureStore({
         counter: counterSlice,
         user: userSlice,
         chat: chatSlice
-        //
     },
     middleware: (getDefaultMiddleWare) => {
         return getDefaultMiddleWare({ thunk: false, serializableCheck: false }).prepend(SagaMiddleware);

@@ -40,7 +40,7 @@ export const routes: RouteObject[] = [
         ],
       },
       { path: pathLocations.publicPage, element: <PublicPage /> },
-      { path: pathLocations.chatPage, element: <RequireAuth><ChatPage /></RequireAuth> },
+      { index: true, path: pathLocations.chatPage, element: <RequireAuth><ChatPage /></RequireAuth> },
       { path: pathLocations.counterPage, element: <CounterPage /> },
       { path: pathLocations.loginPage, element: <LoginPage /> },
       { path: pathLocations.NoMatch, element: <NoMatch /> },

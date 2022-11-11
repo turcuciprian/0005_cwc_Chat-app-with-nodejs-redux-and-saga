@@ -11,28 +11,26 @@ import { Socket } from 'socket.io-client';
 
 export default function ChatPage() {
     const [message, setMessage] = useState('')
-    const [socketState, setSocketState] = useState<Socket<DefaultEventsMap, DefaultEventsMap>>()
+    const [socketState, setSocketState] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>()
     const [isConnected, setIsConnected] = useState<any>(false);
     const dispatch = useDispatch()
     const chat = useSelector(chatSliceState)
     const user: string = useSelector(userState).value || ''
-
     useEffect(() => {
-        console.log('inside use effect');
+    }, [])
+    useEffect(() => {
 
         const socket = io('http://localhost:3001')
-        setSocketState(socket)
 
         socket.on("connect", () => {
-            console.log('socket server connected');
+            setSocketState(socket)
             setIsConnected(true);
         });
         socket.on("disconnect", () => {
-            console.log('socket server - disconnected');
+            setSocketState(null)
             setIsConnected(false);
         });
         socket.on("message", (newMessage: iMessage) => {
-            console.log('newMessage from server:', newMessage);
             dispatch(addChatMessage({ user: newMessage.user, message: newMessage.message || '' }))
         });
         return () => {
@@ -57,15 +55,10 @@ export default function ChatPage() {
                 setMessage(e.target.value);
             }} onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                    console.log('return pressed', socketState);
-                    const newMessage = { user: user, message: message.toString() };
-                    console.log('message:', newMessage);
-                    try {
-                        if (socketState) { socketState.emit("message", newMessage); }
-                    } catch (e) {
-                        console.log('something went terribly wrong');
+                    const newMessage: iMessage = { user: user, message: message.toString() };
+                    dispatch(addChatMessage(newMessage))
+                    if (socketState) { socketState.emit("message", newMessage); }
 
-                    }
                     setMessage('');
                 }
             }} value={message} /><br />
