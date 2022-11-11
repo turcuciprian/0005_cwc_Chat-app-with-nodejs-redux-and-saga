@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addChatMessage, chatSliceState, iMessage } from '../../store/slices/chatSlice';
 import { userState } from '../../store/slices/userSlice';
 import './style.css'
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
-import { Socket } from 'socket.io-client';
 
 
 
@@ -16,8 +15,7 @@ export default function ChatPage() {
     const dispatch = useDispatch()
     const chat = useSelector(chatSliceState)
     const user: string = useSelector(userState).value || ''
-    useEffect(() => {
-    }, [])
+
     useEffect(() => {
 
         const socket = io('http://localhost:3001')

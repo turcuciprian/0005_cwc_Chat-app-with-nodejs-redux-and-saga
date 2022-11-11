@@ -24,7 +24,7 @@ export function LoginPage() {
     }
 
     return (
-        <div>
+        <div className='LoginPage'>
             <h2>{!user ? 'Login Page' : 'Settings'}</h2>
 
             {user ? <><br /><button onClick={() => { dispatch(clearUser()) }}>Logout</button></> : <div>
