@@ -19,7 +19,7 @@ export function LoginPage() {
         event.preventDefault();
 
         let formData = new FormData(event.currentTarget);
-        let username = formData.get("username") as string;
+        let username = formData.get("custom_username") as string;
         dispatch(sagaSetUserAction(username, navigate))
     }
 
@@ -32,7 +32,7 @@ export function LoginPage() {
 
                 <form onSubmit={handleSubmit}>
                     <label>
-                        Username: <input name="username" type="text" />
+                        Username: <input name="custom_username" type="text" />
                     </label>{" "}
                     <button type="submit">Login</button>
                 </form>
