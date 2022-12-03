@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '..'
+import { iMessage } from '../../saga/types'
 
-export interface iMessage {
-    user: string,
-    message: string
-}
 export interface iChatMessagesState {
     messages: iMessage[]
 }

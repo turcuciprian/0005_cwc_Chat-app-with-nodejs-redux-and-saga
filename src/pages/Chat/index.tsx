@@ -1,10 +1,12 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChatMessage, chatSliceState, iMessage } from '../../store/slices/chatSlice';
+import { addChatMessage, chatSliceState } from '../../store/slices/chatSlice';
 import { userState } from '../../store/slices/userSlice';
 import './style.css'
 import io, { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { iMessage } from '../../saga/types';
+import { sagaSetChatAction } from '../../saga/actions/messages';
 
 
 
@@ -17,20 +19,21 @@ export default function ChatPage() {
     const user: string = useSelector(userState).value || ''
 
     useEffect(() => {
-
-        const socket = io('http://localhost:3001')
-
-        socket.on("connect", () => {
+        const socket: Socket<DefaultEventsMap, DefaultEventsMap> = io('http://localhost:3001')
             setSocketState(socket)
-            setIsConnected(true);
-        });
-        socket.on("disconnect", () => {
-            setSocketState(null)
-            setIsConnected(false);
-        });
-        socket.on("message", (newMessage: iMessage) => {
-            dispatch(addChatMessage({ user: newMessage.user, message: newMessage.message || '' }))
-        });
+        dispatch(sagaSetChatAction(socket))
+
+        // socket.on("connect", () => {
+        //     setSocketState(socket)
+        //     setIsConnected(true);
+        // });
+        // socket.on("disconnect", () => {
+        //     setSocketState(null)
+        //     setIsConnected(false);
+        // });
+        // socket.on("message", (newMessage: iMessage) => {
+        //     dispatch(addChatMessage({ user: newMessage.user, message: newMessage.message || '' }))
+        // });
         return () => {
             socket.off('connect');
             socket.off('disconnect');
