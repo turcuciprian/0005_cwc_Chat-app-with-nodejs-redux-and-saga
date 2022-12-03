@@ -7,7 +7,7 @@ import { io } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { Socket } from "socket.io-client";
 
-const receiveMessage = (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => {
+const receiveMessage = (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => { 
   socket.on("disconnect", () => {
     socket.connect();
     console.log('socket disconnected');
