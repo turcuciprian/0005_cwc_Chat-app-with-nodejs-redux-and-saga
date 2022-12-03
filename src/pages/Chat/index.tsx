@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addChatMessage, chatSliceState } from '../../store/slices/chatSlice';
 import { userState } from '../../store/slices/userSlice';
@@ -20,26 +20,23 @@ export default function ChatPage() {
 
     useEffect(() => {
         const socket: Socket<DefaultEventsMap, DefaultEventsMap> = io('http://localhost:3001')
-            setSocketState(socket)
+        setSocketState(socket)
         dispatch(sagaSetChatAction(socket))
 
-        // socket.on("connect", () => {
-        //     setSocketState(socket)
-        //     setIsConnected(true);
-        // });
-        // socket.on("disconnect", () => {
-        //     setSocketState(null)
-        //     setIsConnected(false);
-        // });
-        // socket.on("message", (newMessage: iMessage) => {
-        //     dispatch(addChatMessage({ user: newMessage.user, message: newMessage.message || '' }))
-        // });
+        socket.on("connect", () => {
+            setSocketState(socket)
+            setIsConnected(true);
+        });
+        socket.on("disconnect", () => {
+            setSocketState(null)
+            setIsConnected(false);
+        });
         return () => {
             socket.off('connect');
             socket.off('disconnect');
             socket.off('pong');
         };
-    }, []);
+    }, [dispatch]);
 
 
     return (

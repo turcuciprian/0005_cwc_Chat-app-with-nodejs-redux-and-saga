@@ -1,16 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../routes/auth';
-import { pathLocations } from '../../routes/path';
 import { useDispatch, useSelector } from 'react-redux'
 import './style.css'
-import { clearUser, setUser, userState } from '../../store/slices/userSlice';
+import { clearUser, userState } from '../../store/slices/userSlice';
 import { sagaSetUserAction } from '../../saga/actions/user';
 
 export function LoginPage() {
     const user = useSelector(userState).value
     let navigate = useNavigate();
     let location = useLocation();
-    let auth = useAuth();
     const dispatch = useDispatch();
 
     let from = location.state?.from?.pathname || "/";

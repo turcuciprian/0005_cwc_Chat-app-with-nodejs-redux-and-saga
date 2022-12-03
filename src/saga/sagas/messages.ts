@@ -3,7 +3,6 @@ import { put, takeLatest, call, take } from "redux-saga/effects";
 import { addChatMessage } from "../../store/slices/chatSlice";
 import { eMessageAction, iMessage } from "../types";
 import { eventChannel, END, EventChannel } from 'redux-saga'
-import { io } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { Socket } from "socket.io-client";
 

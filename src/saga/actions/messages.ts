@@ -1,7 +1,6 @@
-import { NavigateFunction } from "react-router-dom"
 import { Socket } from "socket.io-client"
 import { DefaultEventsMap } from "socket.io/dist/typed-events"
-import { eMessageAction, iMessage } from "../types"
+import { eMessageAction } from "../types"
 
 
 
